@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Agents;
 
 namespace SimulacionFutboll
 {
@@ -10,6 +11,8 @@ namespace SimulacionFutboll
     {
         static void Main(string[] args)
         {
+            var g = new Game();
+            Console.WriteLine(g.word);
         }
     }
 }

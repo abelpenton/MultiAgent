@@ -1,0 +1,9 @@
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\bin\Debug\netstandard2.0\Agents.deps.json
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\bin\Debug\netstandard2.0\Agents.dll
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\bin\Debug\netstandard2.0\Agents.pdb
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.csprojResolveAssemblyReference.cache
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.csproj.CoreCompileInputs.cache
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.AssemblyInfoInputs.cache
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.AssemblyInfo.cs
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.dll
+D:\escuela\4to\2doSemestre\Simulacion\2doProyecto\SimulacionFutboll\Agents\obj\Debug\netstandard2.0\Agents.pdb

@@ -6,9 +6,9 @@ using Agents.Map;
 
 namespace Agents
 {
-    public class AgentInteligent : Agent
+    public class AgentIntelligent : Agent
     {
-        public AgentInteligent(int x, int y) : base(x, y)
+        public AgentIntelligent(int x, int y) : base(x, y)
         {
         }
 

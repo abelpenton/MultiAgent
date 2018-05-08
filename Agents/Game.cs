@@ -7,15 +7,12 @@ namespace Agents
 {
     public class Game
     {
-        public Team team1 { get; set; }
-        public Team team2 { get; set; }
+
         public Word word { get; set; }
 
-        public Game()
+        public Game(int N = 10)
         {
-            team1 = new Team();
-            team2 = new Team();
-            word = new Word();
+            word = new Word(N);
         }
 
         public void StartSimulation(int turn)
@@ -33,5 +30,7 @@ namespace Agents
         {
             return true;
         }
+
+      
     }
 }
