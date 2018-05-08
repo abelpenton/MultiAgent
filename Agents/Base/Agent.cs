@@ -13,42 +13,41 @@ namespace Agents.Base
         {
         }
 
-        private bool canMoveBoll(Word word)
+        private bool canMoveBoll()
         {
             throw new Exception();
         }
-        public Word moveBoll(Word word)
+        public void moveBoll()
         {
             lastAction = ActionPlay.MoveBall;
             throw new ArgumentException();
         }
         
-        private bool canMove(Word word)
+        private bool canMove()
         {
             throw new Exception();
         }
-        public virtual Word move(Word word)
+        public virtual void move()
         {
             lastAction = ActionPlay.Move;
             throw new Exception();
         }
 
-        public Word doAction(Word word)
+        public void doAction()
         {
-            if (canMoveBoll(word))
+            if (canMoveBoll())
             {
-               moveBoll(word);
+               moveBoll();
             }
             else
             {
-                if (canMove(word))
-                    move(word);
+                if (canMove())
+                    move();
                 else
                 {
                     lastAction = ActionPlay.Pass;
                 }
             }
-            return word;
         }
     }
 }

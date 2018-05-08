@@ -12,7 +12,7 @@ namespace Agents
         {
         }
 
-        public override Word move(Word word)
+        public override void move()
         {
             throw new Exception();
         }
