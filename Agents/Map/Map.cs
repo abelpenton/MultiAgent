@@ -13,7 +13,7 @@ namespace Agents.Map
         private Random r { get; set; }
         private bool[,] used { get; set; }
         public List<Boll> balls { get; set; }
-
+        public List<Goals> _goals { get; set; }
         public int _n { get; set; }
         public string[,] map { get; set; }
         public Word(int N)
@@ -24,6 +24,7 @@ namespace Agents.Map
             map = new string[N, N];
             team1 = new Team();
             team2 = new Team();
+            _goals = new List<Goals>();
             var count = r.Next(1, 5);
             SetGoals();
             FillTeam(team1,count);
@@ -46,6 +47,9 @@ namespace Agents.Map
             for (int i = top; i < top + 4; i++)
             {
                 map[i, 0] = map[i,_n-1] = "P";
+                _goals.Add(new Goals(i,0));
+                _goals.Add(new Goals(i, _n-1));
+
             }
 
             foreach (var t1 in team1._members)
