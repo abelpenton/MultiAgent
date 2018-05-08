@@ -39,11 +39,11 @@ namespace Agents
         {
             foreach (var a in t1._members)
             {
-                a.doAction();
+                a.doAction(word);
             }
             foreach (var a in t2._members)
             {
-                a.doAction();
+                a.doAction(word);
             }
         }
         private bool EndOfGame()

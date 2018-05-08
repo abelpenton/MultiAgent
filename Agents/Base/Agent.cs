@@ -9,6 +9,8 @@ namespace Agents.Base
     public abstract class Agent : Element
     {
         public ActionPlay lastAction { get; set; }
+        private Word word { get; set; }
+
         public Agent(int x, int y) : base(x, y)
         {
         }
@@ -33,8 +35,9 @@ namespace Agents.Base
             throw new Exception();
         }
 
-        public void doAction()
+        public void doAction(Word word)
         {
+            this.word = word;
             if (canMoveBoll())
             {
                moveBoll();
