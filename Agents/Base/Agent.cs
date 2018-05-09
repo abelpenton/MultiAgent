@@ -14,7 +14,7 @@ namespace Agents.Base
         private int[] columns { get; set; }
         public Agent(int x, int y) : base(x, y)
         {
-            addr = new (int,int)[4] { (1,0),(-1,0),(0,1),(0,-1)};
+            addr = new (int,int)[4] { (0, 1), (0, -1),(1,0),(-1,0)};
         }
 
         private bool NotGoals(int x, int y)

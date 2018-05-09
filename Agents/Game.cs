@@ -21,7 +21,7 @@ namespace Agents
             var r = new Random();
             while(turn-- > 0)
             {
-                var wait = Console.ReadLine();
+                //var wait = Console.ReadLine();
 
                 if (EndOfGame())
                     return;
@@ -45,7 +45,7 @@ namespace Agents
                 Console.WriteLine();
                 Console.WriteLine($"Score Team1: {word.team1._goals} \t Score Team2: {word.team2._goals}");
                 Console.WriteLine("-----------------------------------");
-                var wait = Console.ReadLine();
+                //var wait = Console.ReadLine();
             }
             foreach (var a in t2._members)
             {
@@ -54,7 +54,7 @@ namespace Agents
                 Console.WriteLine();
                 Console.WriteLine($"Score Team1: {word.team1._goals} \t Score Team2: {word.team2._goals}");
                 Console.WriteLine("-----------------------------------");
-                var wait = Console.ReadLine();
+                //var wait = Console.ReadLine();
             }
         }
         private bool EndOfGame()
