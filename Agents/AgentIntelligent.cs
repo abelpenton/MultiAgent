@@ -85,12 +85,13 @@ namespace Agents
                 }
                 else
                 {
-                    Console.WriteLine($"A Agent Intelligent find a ball in ({node.pos.x},{node.pos.y}) and go for");
-                    while (node != null)
+                    Console.WriteLine($"A Agent Intelligent find a ball close of ({node.pos.x},{node.pos.y}) and go for");
+                    while (node.parent != null)
                     {
                         this.routePath.route.Add(node.pos);
                         node = node.parent;
                     }
+                    this.routePath.route.Reverse();
                     MoveForRoute();
                 }
             }
