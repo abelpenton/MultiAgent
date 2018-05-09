@@ -9,7 +9,7 @@ namespace Agents.Base
     public abstract class Agent : Element
     {
         public ActionPlay lastAction { get; set; }
-        private Word word { get; set; }
+        public Word word { get; set; }
         public (int r,int c)[] addr { get; set; }
         private int[] columns { get; set; }
         public Agent(int x, int y) : base(x, y)
@@ -31,7 +31,7 @@ namespace Agents.Base
         {
             return !word.balls.Exists(b => b._x == x && b._y == y);
         }
-        private bool ValidPos(int x, int y)
+        public bool ValidPos(int x, int y)
         {
             return x >= 0 && x < word._n && y >= 0 && y < word._n && NotMember(x, y) && NotBall(x, y);
         }
