@@ -59,6 +59,7 @@ namespace Agents
         }
         private bool EndOfGame()
         {
+            
             var result = true;
             foreach (var a in word.team1._members)
             {

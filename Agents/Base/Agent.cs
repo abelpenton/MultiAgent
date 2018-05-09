@@ -31,9 +31,13 @@ namespace Agents.Base
         {
             return !word.balls.Exists(b => b._x == x && b._y == y);
         }
+        public bool ValidPos2(int x, int y)
+        {
+            return x >= 0 && x < word._n && y >= 0 && y < word._n && NotMember(x, y);
+        }
         public bool ValidPos(int x, int y)
         {
-            return x >= 0 && x < word._n && y >= 0 && y < word._n && NotMember(x, y) && NotBall(x, y);
+            return ValidPos2(x,y) && NotBall(x, y);
         }
         private bool canMoveBoll((int r,int c) addr)
         {
@@ -83,9 +87,29 @@ namespace Agents.Base
             this._y += addr.c;
         }
 
+        private bool CheckIfBallCanMove()
+        {
+            foreach (var b in word.balls)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if(ValidPos(b._x+addr[i].r, b._y + addr[i].c))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public void doAction(Word word)
         {
+            
             this.word = word;
+            if (!CheckIfBallCanMove())
+            {
+                lastAction = ActionPlay.Pass;
+                return;
+            }
             var r = new Random();
             bool[] mark = new bool[4];
             for (int i = 0; i < 4; i++)
@@ -124,9 +148,6 @@ namespace Agents.Base
                 }
                 
             }
-            
-            
-            
         }
     }
 }
