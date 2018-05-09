@@ -23,7 +23,7 @@ namespace Agents.Base
         }
         private bool NotMember(int x, int y)
         {
-            return !(word.team1._members.Exists(m => m._x == x && m._y == y) && 
+            return !(word.team1._members.Exists(m => m._x == x && m._y == y) || 
                    word.team2._members.Exists(m => m._x == x && m._y == y));
         }
 
@@ -33,7 +33,7 @@ namespace Agents.Base
         }
         private bool ValidPos(int x, int y)
         {
-            return x >= 0 && x < word._n && y >= 0 && y < word._n && NotGoals(x, y) && NotMember(x, y) && NotBall(x, y);
+            return x >= 0 && x < word._n && y >= 0 && y < word._n && NotMember(x, y) && NotBall(x, y);
         }
         private bool canMoveBoll(int nextX, int nextY, (int r,int c) addr)
         {
@@ -55,27 +55,30 @@ namespace Agents.Base
                 {
                     word.team2._goals++;
                 }
+                Console.WriteLine($"GOOOOOOOLLLLLLL!!!!!");
                 word.balls.Remove(b);
                 (int x,int y) = word.generatePos();
                 word.balls.Add(new Boll(x, y));
             }
             else
             {
+                Console.WriteLine($"Move a ball from ({b._x},{b._y}) to ({b._x + addr.r},{b._y + addr.c})");
                 b._x += addr.r;
                 b._y += addr.c;
             }
             
         }
         
-        private bool canMove((int x,int y)next)
+        private bool canMove((int r,int c)addr)
         {
-            return ValidPos(next.x, next.y);            
+            return ValidPos(this._x + addr.r, this._y + addr.c) && NotGoals(this._x + addr.r, this._y + addr.c);            
         }
-        public virtual void move((int x, int y) next)
+        public virtual void move((int r, int c) addr)
         {
+            Console.WriteLine($"Move a Agent from ({this._x},{this._y}) to ({this._x + addr.r},{this._y + addr.c})");
             lastAction = ActionPlay.Move;
-            this._x = next.x;
-            this._y = next.y;
+            this._x += addr.r;
+            this._y += addr.c;
         }
 
         public void doAction(Word word)
@@ -83,40 +86,41 @@ namespace Agents.Base
             this.word = word;
             var r = new Random();
             bool[] mark = new bool[4];
-            while(true)
+            for (int i = 0; i < 4; i++)
             {
+                if (canMoveBoll(this._x + addr[i].r, this._y + addr[i].c, addr[i]))
+                {
+                    moveBoll((addr[i].r, addr[i].c));
+                    return;
+                }
+            }
+            while (true)
+            {                
                 var lik = r.Next(0, 4);
                 mark[lik] = true;
-                if (canMoveBoll(this._x + addr[lik].r, this._y + addr[lik].c, addr[lik]))
+                if (canMove(addr[lik]))
                 {
-                    moveBoll((addr[lik].r, addr[lik].c));
+                    move(addr[lik]);
                     break;
                 }
                 else
                 {
-                    if (canMove((this._x + addr[lik].r, this._y + addr[lik].c)))
+                    var c = 0;
+                    for (int i = 0; i < 4; i++)
                     {
-                        move((this._x + addr[lik].r, this._y + addr[lik].c));
-                        break;
+                        if(mark[i])
+                        {
+                            c++; 
+                        }
                     }
-                    else
+                    if(c == 4)
                     {
-                        var c = 0;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if(mark[i])
-                            {
-                                c++; 
-                            }
-                        }
-                        if(c == 4)
-                        {
-                            lastAction = ActionPlay.Pass;
-                            return;
-                        }
+                        lastAction = ActionPlay.Pass;
+                        return;
+                    }
                         
-                    }
                 }
+                
             }
             
             

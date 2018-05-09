@@ -93,7 +93,7 @@ namespace Agents.Map
         private void FillBalls()
         {
             balls = new List<Boll>();
-            var count = r.Next(1, 5);
+            var count = r.Next(1, 10);
             int x, y;
             for (int i = 0; i < count; i++)
             {
