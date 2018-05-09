@@ -40,10 +40,15 @@ namespace Agents
             foreach (var a in t1._members)
             {
                 a.doAction(word);
+                Console.WriteLine(word);
+                Console.WriteLine("-----------------------------------");
             }
             foreach (var a in t2._members)
             {
                 a.doAction(word);
+                Console.WriteLine(word);
+                Console.WriteLine("-----------------------------------");
+
             }
         }
         private bool EndOfGame()

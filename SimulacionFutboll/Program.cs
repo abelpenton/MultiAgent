@@ -13,6 +13,8 @@ namespace SimulacionFutboll
         {
             var g = new Game();
             Console.WriteLine(g.word);
+            Console.WriteLine("***********************");
+            g.StartSimulation(10);
         }
     }
 }

@@ -12,9 +12,6 @@ namespace Agents
         {
         }
 
-        public override void move()
-        {
-            throw new Exception();
-        }
+       
     }
 }
