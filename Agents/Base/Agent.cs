@@ -45,8 +45,26 @@ namespace Agents.Base
             var b = word.balls.Find(ball => ball._x == this._x + addr.r && ball._y == this._y + addr.c);
             this._x += addr.r;
             this._y += addr.c;
-            b._x += addr.r;
-            b._y += addr.c;            
+            if (word._goals.Exists(goal => goal._x == b._x + addr.r && goal._y == b._y + addr.c))
+            {
+                if(word.team1._members.Exists(m => m._x == this._x && m._y == this._y))
+                {
+                    word.team1._goals++;
+                }
+                else
+                {
+                    word.team2._goals++;
+                }
+                word.balls.Remove(b);
+                (int x,int y) = word.generatePos();
+                word.balls.Add(new Boll(x, y));
+            }
+            else
+            {
+                b._x += addr.r;
+                b._y += addr.c;
+            }
+            
         }
         
         private bool canMove((int x,int y)next)

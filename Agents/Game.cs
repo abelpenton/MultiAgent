@@ -41,12 +41,16 @@ namespace Agents
             {
                 a.doAction(word);
                 Console.WriteLine(word);
+                Console.WriteLine();
+                Console.WriteLine($"Score Team1: {word.team1._goals} \t Score Team2: {word.team2._goals}");
                 Console.WriteLine("-----------------------------------");
             }
             foreach (var a in t2._members)
             {
                 a.doAction(word);
                 Console.WriteLine(word);
+                Console.WriteLine();
+                Console.WriteLine($"Score Team1: {word.team1._goals} \t Score Team2: {word.team2._goals}");
                 Console.WriteLine("-----------------------------------");
 
             }

@@ -125,7 +125,7 @@ namespace Agents.Map
             }
         }
 
-        private (int x, int y) generatePos()
+        public (int x, int y) generatePos()
         {
             int x, y;
             while(true)
