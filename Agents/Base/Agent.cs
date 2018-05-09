@@ -10,7 +10,7 @@ namespace Agents.Base
     {
         public ActionPlay lastAction { get; set; }
         private Word word { get; set; }
-        private (int r,int c)[] addr { get; set; }
+        public (int r,int c)[] addr { get; set; }
         private int[] columns { get; set; }
         public Agent(int x, int y) : base(x, y)
         {
@@ -35,8 +35,10 @@ namespace Agents.Base
         {
             return x >= 0 && x < word._n && y >= 0 && y < word._n && NotMember(x, y) && NotBall(x, y);
         }
-        private bool canMoveBoll(int nextX, int nextY, (int r,int c) addr)
+        private bool canMoveBoll((int r,int c) addr)
         {
+            int nextX = _x + addr.r;
+            int nextY = _y + addr.c;
             return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos(nextX + addr.r, nextY + addr.c);
         }
         public void moveBoll((int r, int c) addr)
@@ -69,7 +71,7 @@ namespace Agents.Base
             
         }
         
-        private bool canMove((int r,int c)addr)
+        public virtual bool canMove((int r,int c)addr)
         {
             return ValidPos(this._x + addr.r, this._y + addr.c) && NotGoals(this._x + addr.r, this._y + addr.c);            
         }
@@ -88,9 +90,9 @@ namespace Agents.Base
             bool[] mark = new bool[4];
             for (int i = 0; i < 4; i++)
             {
-                if (canMoveBoll(this._x + addr[i].r, this._y + addr[i].c, addr[i]))
+                if (canMoveBoll(addr[i]))
                 {
-                    moveBoll((addr[i].r, addr[i].c));
+                    moveBoll(addr[i]);
                     return;
                 }
             }
