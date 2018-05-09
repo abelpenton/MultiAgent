@@ -39,41 +39,69 @@ namespace Agents.Base
         {
             return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos(nextX + addr.r, nextY + addr.c);
         }
-        public void moveBoll()
+        public void moveBoll((int r, int c) addr)
         {
             lastAction = ActionPlay.MoveBall;
-            throw new ArgumentException();
+            var b = word.balls.Find(ball => ball._x == this._x + addr.r && ball._y == this._y + addr.c);
+            this._x += addr.r;
+            this._y += addr.c;
+            b._x += addr.r;
+            b._y += addr.c;            
         }
         
-        private bool canMove()
+        private bool canMove((int x,int y)next)
         {
-            throw new Exception();
+            return ValidPos(next.x, next.y);            
         }
-        public virtual void move()
+        public virtual void move((int x, int y) next)
         {
             lastAction = ActionPlay.Move;
-            throw new Exception();
+            this._x = next.x;
+            this._y = next.y;
         }
 
         public void doAction(Word word)
         {
             this.word = word;
-            for (int i = 0; i < 4; i++)
+            var r = new Random();
+            bool[] mark = new bool[4];
+            while(true)
             {
-                if (canMoveBoll(this._x + addr[i].r,this._y+addr[i].c, addr[i]))
+                var lik = r.Next(0, 4);
+                mark[lik] = true;
+                if (canMoveBoll(this._x + addr[lik].r, this._y + addr[lik].c, addr[lik]))
                 {
-                    moveBoll();
+                    moveBoll((addr[lik].r, addr[lik].c));
+                    break;
                 }
                 else
                 {
-                    if (canMove())
-                        move();
+                    if (canMove((this._x + addr[lik].r, this._y + addr[lik].c)))
+                    {
+                        move((this._x + addr[lik].r, this._y + addr[lik].c));
+                        break;
+                    }
                     else
                     {
-                        lastAction = ActionPlay.Pass;
+                        var c = 0;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if(mark[i])
+                            {
+                                c++; 
+                            }
+                        }
+                        if(c == 4)
+                        {
+                            lastAction = ActionPlay.Pass;
+                            return;
+                        }
+                        
                     }
                 }
             }
+            
+            
             
         }
     }
