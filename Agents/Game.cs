@@ -40,6 +40,7 @@ namespace Agents
                 else
                     Actions(word.team2, word.team1);
             }
+            Console.WriteLine("Time Complete!!!!");
         }
 
         private void Actions(Team t1, Team t2)

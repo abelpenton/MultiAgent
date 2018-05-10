@@ -25,7 +25,7 @@ namespace Agents.Map
             team1 = new Team();
             team2 = new Team();
             _goals = new List<Goals>();
-            var count = r.Next(1, 2);
+            var count = r.Next(1, 11);
             SetGoals();
             FillTeam(team1,count);
             FillTeam(team2,count);
@@ -93,7 +93,7 @@ namespace Agents.Map
         private void FillBalls()
         {
             balls = new List<Boll>();
-            var count = r.Next(1, 2);
+            var count = r.Next(1, 6);
             int x, y;
             for (int i = 0; i < count; i++)
             {

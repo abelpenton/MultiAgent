@@ -11,7 +11,6 @@ namespace Agents.Base
         public ActionPlay lastAction { get; set; }
         public Word word { get; set; }
         public (int r,int c)[] addr { get; set; }
-        private int[] columns { get; set; }
         public Agent(int x, int y) : base(x, y)
         {
             addr = new (int,int)[4] { (1, 0), (-1, 0),(0, 1), (0, -1)};
@@ -43,15 +42,11 @@ namespace Agents.Base
         {
             return x >= 0 && x < word._n && y >= 0 && y < word._n && NotBall(x, y);
         }
-        public bool ValidPos4(int x, int y)
-        {
-            return ValidPos2(x, y) && NotBall(x, y);
-        }
         public bool canMoveBoll((int r,int c) addr, int x, int y)
         {
             int nextX = x + addr.r;
             int nextY = y + addr.c;
-            return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos4(nextX + addr.r, nextY + addr.c);
+            return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos2(nextX + addr.r, nextY + addr.c);
         }
         public void moveBoll((int r, int c) addr)
         {
@@ -105,11 +100,6 @@ namespace Agents.Base
             }
             return false;
         }
-        private bool CheckIfBallCanMove()
-        {
-            return word.balls.Exists(b => CanMoveBall(b._x, b._y));
-        }
-
         public void GenerateNewBallsIfBlocks()
         {
             var l = new List<Boll>();

@@ -109,7 +109,6 @@ namespace Agents
                         node = node.parent;
                     }
                     this.routePath.route.Reverse();
-                    MoveForRoute();
                 }
                 return;
             }
@@ -126,7 +125,7 @@ namespace Agents
             {
                 rute = false;
                 routePath = new Route();
-                Console.WriteLine("Search other ball INvalid ...");
+                Console.WriteLine("Search other ball ...");
                 var node = SearchBall();
                 if (!this.rute)
                 {
@@ -141,7 +140,6 @@ namespace Agents
                         node = node.parent;
                     }
                     this.routePath.route.Reverse();
-                    MoveForRoute();
                 }
             }
 

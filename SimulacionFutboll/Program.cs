@@ -11,10 +11,10 @@ namespace SimulacionFutboll
     {
         static void Main(string[] args)
         {
-            var g = new Game();
+            var g = new Game(20);
             Console.WriteLine(g.word);
             Console.WriteLine("***********************");
-            g.StartSimulation(1000);
+            g.StartSimulation(90);
         }
     }
 }
