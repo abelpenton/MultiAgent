@@ -19,12 +19,18 @@ namespace Agents
         public void StartSimulation(int turn)
         {
             var r = new Random();
-            while(turn-- > 0)
+            //var wait = Console.ReadLine();
+            while (turn-- > 0)
             {
-                //var wait = Console.ReadLine();
+                
 
                 if (EndOfGame())
+                {
+                    word.team1._members[0].GenerateNewBallsIfBlocks();
+                    Console.WriteLine("End Game");
+                    Console.ReadLine();
                     return;
+                }
 
                 var lik = r.Next(0, 2);
                 if (lik == 0)
@@ -38,6 +44,10 @@ namespace Agents
 
         private void Actions(Team t1, Team t2)
         {
+            if(t1._members.Count == 0 || t2._members.Count == 0)
+            {
+
+            }
             foreach (var a in t1._members)
             {
                 a.doAction(word);

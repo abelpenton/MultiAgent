@@ -14,10 +14,10 @@ namespace Agents.Base
         private int[] columns { get; set; }
         public Agent(int x, int y) : base(x, y)
         {
-            addr = new (int,int)[4] { (0, 1), (0, -1),(1,0),(-1,0)};
+            addr = new (int,int)[4] { (1, 0), (-1, 0),(0, 1), (0, -1)};
         }
 
-        private bool NotGoals(int x, int y)
+        public bool NotGoals(int x, int y)
         {
             return !word._goals.Exists(g => g._x == x && g._y == y);
         }
@@ -37,13 +37,21 @@ namespace Agents.Base
         }
         public bool ValidPos(int x, int y)
         {
-            return ValidPos2(x,y) && NotBall(x, y);
+            return ValidPos2(x,y) && NotBall(x, y) && NotGoals(x,y);
         }
-        private bool canMoveBoll((int r,int c) addr)
+        public bool ValidPos3(int x, int y)
         {
-            int nextX = _x + addr.r;
-            int nextY = _y + addr.c;
-            return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos(nextX + addr.r, nextY + addr.c);
+            return x >= 0 && x < word._n && y >= 0 && y < word._n && NotBall(x, y);
+        }
+        public bool ValidPos4(int x, int y)
+        {
+            return ValidPos2(x, y) && NotBall(x, y);
+        }
+        public bool canMoveBoll((int r,int c) addr, int x, int y)
+        {
+            int nextX = x + addr.r;
+            int nextY = y + addr.c;
+            return word.balls.Exists(b => b._x == nextX && b._y == nextY) && ValidPos4(nextX + addr.r, nextY + addr.c);
         }
         public void moveBoll((int r, int c) addr)
         {
@@ -86,35 +94,57 @@ namespace Agents.Base
             this._x += addr.r;
             this._y += addr.c;
         }
-
-        private bool CheckIfBallCanMove()
+        public bool CanMoveBall(int x, int y)
         {
-            foreach (var b in word.balls)
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
+                if (ValidPos3(x + addr[i].r, y + addr[i].c) && ValidPos3(x + (addr[i].r*-1), y + (addr[i].c*-1)))
                 {
-                    if(ValidPos(b._x+addr[i].r, b._y + addr[i].c))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
+        }
+        private bool CheckIfBallCanMove()
+        {
+            return word.balls.Exists(b => CanMoveBall(b._x, b._y));
+        }
+
+        public void GenerateNewBallsIfBlocks()
+        {
+            var l = new List<Boll>();
+            bool nomove = false;
+            foreach (var b in word.balls)
+            {
+                
+                if (!CanMoveBall(b._x, b._y))
+                {
+                    nomove = true;
+                    word.balls.Remove(b);
+                    (int x, int y) newball;
+                    while(true)
+                    {
+                        newball = word.generatePos();
+                        if (CanMoveBall(newball.x, newball.y))
+                            break;
+                    }
+                    word.balls.Add(new Boll(newball.x, newball.y));
+                    break;
+                }
+            }
+            if (nomove)
+                GenerateNewBallsIfBlocks();
         }
         public void doAction(Word word)
         {
             
             this.word = word;
-            if (!CheckIfBallCanMove())
-            {
-                lastAction = ActionPlay.Pass;
-                return;
-            }
+            GenerateNewBallsIfBlocks();
             var r = new Random();
             bool[] mark = new bool[4];
             for (int i = 0; i < 4; i++)
             {
-                if (canMoveBoll(addr[i]))
+                if (canMoveBoll(addr[i],_x,_y))
                 {
                     moveBoll(addr[i]);
                     return;
@@ -141,6 +171,7 @@ namespace Agents.Base
                     }
                     if(c == 4)
                     {
+                        Console.WriteLine("Agent Pass");
                         lastAction = ActionPlay.Pass;
                         return;
                     }
